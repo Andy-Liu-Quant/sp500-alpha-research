@@ -8,6 +8,7 @@ Adds price-storage tables to sp500_pit.db.
 Run this once (or whenever you want to reset the schema) before running
 download_prices.py.
 """
+
 import sqlite3
 
 DB_PATH = "sp500_pit.db"
