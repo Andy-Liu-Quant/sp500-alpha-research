@@ -1,0 +1,21 @@
+# Populated database (contains bulk downloaded price history -- large,
+# environment-specific, and reproducible via download_prices.py; don't
+# commit it once it has real price data in it)
+src/*.db-journal
+
+# Generated outputs from running the research/backtest scripts
+*.png
+*.csv
+!data/raw_reference/*.csv
+alpha_screening_results.csv
+alpha_screening_multi_horizon_results.csv
+alpha_correlation_matrix.csv
+ensemble_results.csv
+ml_combine_results.csv
+sp500_backtest_*_daily_results.csv
+sp500_backtest_*_performance.png
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
