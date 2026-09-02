@@ -182,8 +182,9 @@ def download_batch(tickers: list, start: str, end: str):
 
 
 def run(start: str, end: str, batch_size: int = 50, force: bool = False,
-        sleep_between_batches: float = 1.0, ticker_filter: list = None):
-    conn = sqlite3.connect(DB_PATH)
+        sleep_between_batches: float = 1.0, ticker_filter: list = None,
+        db_path: str = None):
+    conn = sqlite3.connect(db_path or DB_PATH)
 
     all_tickers = get_all_tickers(conn, ticker_filter)
 
@@ -255,6 +256,9 @@ def run(start: str, end: str, batch_size: int = 50, force: bool = False,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument("--db", default="sp500_pit.db",
+                         help="Path to the point-in-time database to download prices into. "
+                              "E.g. --db sp400_pit.db for the mid-cap universe.")
     parser.add_argument("--start", default="2015-01-01")
     parser.add_argument("--end", default=datetime.now().strftime("%Y-%m-%d"))
     parser.add_argument("--batch-size", type=int, default=50)
@@ -271,4 +275,4 @@ if __name__ == "__main__":
         ticker_filter = [t.strip().upper() for t in args.tickers.split(",") if t.strip()]
 
     run(args.start, args.end, batch_size=args.batch_size, force=args.force,
-        sleep_between_batches=args.sleep, ticker_filter=ticker_filter)
+        sleep_between_batches=args.sleep, ticker_filter=ticker_filter, db_path=args.db)
